@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     await speechService.initializeFromConfig();
     const audioBuffer = await speechService.textToSpeech(text);
 
-    return new NextResponse(audioBuffer, {
+    return new NextResponse(Buffer.from(audioBuffer), {
       headers: {
         'Content-Type': 'audio/wav',
         'Content-Disposition': 'attachment; filename="speech.wav"'

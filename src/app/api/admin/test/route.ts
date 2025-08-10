@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as speechsdk from 'microsoft-cognitiveservices-speech-sdk';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { azureKey, azureRegion } = await request.json();
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         }
       );
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: '测试连接时发生错误' }, { status: 500 });
   }
 }

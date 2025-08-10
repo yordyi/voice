@@ -11,7 +11,7 @@ export interface Config {
 export async function saveConfig(config: Config): Promise<void> {
   try {
     await fs.writeFile(CONFIG_FILE_PATH, JSON.stringify(config, null, 2));
-  } catch (error) {
+  } catch {
     throw new Error('保存配置失败');
   }
 }
@@ -20,7 +20,7 @@ export async function loadConfig(): Promise<Config> {
   try {
     const data = await fs.readFile(CONFIG_FILE_PATH, 'utf8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch {
     // 如果文件不存在，返回空配置
     return { azureKey: '', azureRegion: '' };
   }
@@ -39,7 +39,7 @@ export async function getAzureConfig(): Promise<Config> {
       azureKey: process.env.AZURE_SPEECH_KEY || '',
       azureRegion: process.env.AZURE_SPEECH_REGION || ''
     };
-  } catch (error) {
+  } catch {
     // 最后兜底从环境变量读取
     return {
       azureKey: process.env.AZURE_SPEECH_KEY || '',

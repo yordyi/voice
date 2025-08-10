@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       style
     });
 
-    return new NextResponse(audioBuffer, {
+    return new NextResponse(Buffer.from(audioBuffer), {
       headers: {
         'Content-Type': 'audio/wav',
         'Content-Disposition': 'attachment; filename="enhanced-speech.wav"'

@@ -12,7 +12,6 @@ import {
   Mic, 
   MicOff, 
   Play, 
-  Pause, 
   Download, 
   Upload, 
   Zap, 
@@ -20,7 +19,6 @@ import {
   Headphones, 
   Settings, 
   CheckCircle,
-  AlertCircle,
   Loader2,
   Waves,
   Volume2,
@@ -28,8 +26,7 @@ import {
   Target,
   Users,
   BookOpen,
-  Globe,
-  Sparkles
+  Globe
 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
@@ -67,7 +64,7 @@ export default function Home() {
 
       mediaRecorder.start();
       setIsRecording(true);
-    } catch (error) {
+    } catch {
       alert('无法访问麦克风，请检查权限设置');
     }
   };
@@ -112,7 +109,7 @@ export default function Home() {
       } else {
         alert('语音识别失败');
       }
-    } catch (error) {
+    } catch {
       alert('语音转文本失败');
     } finally {
       clearInterval(progressInterval);
@@ -155,7 +152,7 @@ export default function Home() {
       } else {
         alert('文本转语音失败');
       }
-    } catch (error) {
+    } catch {
       alert('文本转语音失败');
     } finally {
       clearInterval(progressInterval);

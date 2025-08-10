@@ -12,7 +12,7 @@ export interface IntentResult {
   text: string;
   intent: string;
   confidence: number;
-  entities: { [key: string]: any };
+  entities: { [key: string]: unknown };
 }
 
 export interface SpeakerRecognitionResult {
@@ -240,8 +240,8 @@ export class AzureSpeechService {
               overallScore: (pronunciationResult.accuracyScore + pronunciationResult.fluencyScore + pronunciationResult.completenessScore) / 3,
               words: pronunciationResult.detailResult?.Words?.map(word => ({
                 word: word.Word,
-                accuracyScore: word.PronunciationAssessment.AccuracyScore,
-                errorType: word.PronunciationAssessment.ErrorType
+                accuracyScore: word.PronunciationAssessment?.AccuracyScore || 0,
+                errorType: word.PronunciationAssessment?.ErrorType || 'None'
               })) || []
             });
           } else {
@@ -273,7 +273,7 @@ export class AzureSpeechService {
       recognizer.recognizeOnceAsync(
         result => {
           if (result.reason === speechsdk.ResultReason.RecognizedSpeech) {
-            const detectedLanguage = result.properties?.getProperty(speechsdk.PropertyId.SpeechServiceConnection_AutoDetectSourceLanguageResult) || "zh-CN";
+            const detectedLanguage = result.properties?.getProperty(speechsdk.PropertyId.SpeechServiceConnection_AutoDetectSourceLanguages) || "zh-CN";
             
             resolve({
               language: detectedLanguage,
@@ -319,7 +319,7 @@ export class AzureSpeechService {
         recognizer.recognizeOnceAsync(
           result => {
             if (result.reason === speechsdk.ResultReason.RecognizedSpeech) {
-              const detectedLanguage = result.properties?.getProperty(speechsdk.PropertyId.SpeechServiceConnection_AutoDetectSourceLanguageResult);
+              const detectedLanguage = result.properties?.getProperty(speechsdk.PropertyId.SpeechServiceConnection_AutoDetectSourceLanguages);
               resolve({
                 text: result.text,
                 language: detectedLanguage,

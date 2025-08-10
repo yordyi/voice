@@ -13,7 +13,7 @@ export async function GET() {
       azureKey: maskedKey,
       azureRegion: config.azureRegion
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: '读取配置失败' }, { status: 500 });
   }
 }
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     await saveConfig({ azureKey, azureRegion });
     
     return NextResponse.json({ message: '配置保存成功' });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: '保存配置失败' }, { status: 500 });
   }
 }

@@ -22,11 +22,11 @@ import {
   ArrowLeft,
   Brain,
   Shield,
-  Zap,
   Database,
   Cloud,
   Activity
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AdminPanel() {
   const [azureKey, setAzureKey] = useState('');
@@ -49,8 +49,8 @@ export default function AdminPanel() {
         setAzureKey(data.azureKey || '');
         setAzureRegion(data.azureRegion || '');
       }
-    } catch (error) {
-      console.error('加载配置失败:', error);
+    } catch {
+      console.error('加载配置失败');
     }
   };
 
@@ -76,7 +76,7 @@ export default function AdminPanel() {
       } else {
         setMessage('保存失败，请重试');
       }
-    } catch (error) {
+    } catch {
       setMessage('保存失败，请重试');
     } finally {
       setLoading(false);
@@ -121,7 +121,7 @@ export default function AdminPanel() {
         setConnectionStatus('error');
         setMessage(data.error || '连接测试失败');
       }
-    } catch (error) {
+    } catch {
       setConnectionStatus('error');
       setMessage('连接测试失败');
     } finally {
@@ -180,10 +180,10 @@ export default function AdminPanel() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" asChild>
-                <a href="/" className="flex items-center space-x-2">
+                <Link href="/" className="flex items-center space-x-2">
                   <ArrowLeft className="w-4 h-4" />
                   <span>返回首页</span>
-                </a>
+                </Link>
               </Button>
               <Separator orientation="vertical" className="h-6" />
               <div className="flex items-center space-x-2">
@@ -490,7 +490,7 @@ export default function AdminPanel() {
                       <div className="flex-1">
                         <h4 className="font-medium text-slate-900 mb-1">创建语音服务资源</h4>
                         <p className="text-sm text-slate-600">
-                          在Azure门户中搜索"Speech Services"并创建新资源
+                          在Azure门户中搜索&quot;Speech Services&quot;并创建新资源
                         </p>
                       </div>
                     </div>
@@ -514,7 +514,7 @@ export default function AdminPanel() {
                       <div className="flex-1">
                         <h4 className="font-medium text-slate-900 mb-1">测试连接</h4>
                         <p className="text-sm text-slate-600">
-                          点击"测试连接"按钮验证配置是否正确
+                          点击&quot;测试连接&quot;按钮验证配置是否正确
                         </p>
                       </div>
                     </div>

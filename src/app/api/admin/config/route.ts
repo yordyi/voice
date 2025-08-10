@@ -4,13 +4,10 @@ import { saveConfig, loadConfig } from '@/lib/config';
 export async function GET() {
   try {
     const config = await loadConfig();
-    // 不返回完整密钥，只返回前几位用于显示
-    const maskedKey = config.azureKey 
-      ? config.azureKey.substring(0, 8) + '...' 
-      : '';
+    // 密钥部分默认返回空白，不显示任何信息
     
     return NextResponse.json({
-      azureKey: maskedKey,
+      azureKey: '',
       azureRegion: config.azureRegion
     });
   } catch {
@@ -29,7 +26,10 @@ export async function POST(request: NextRequest) {
     await saveConfig({ azureKey, azureRegion });
     
     return NextResponse.json({ message: '配置保存成功' });
-  } catch {
-    return NextResponse.json({ error: '保存配置失败' }, { status: 500 });
+  } catch (error) {
+    console.error('API: 保存配置失败:', error);
+    return NextResponse.json({ 
+      error: '保存配置失败: ' + (error instanceof Error ? error.message : String(error))
+    }, { status: 500 });
   }
 }
